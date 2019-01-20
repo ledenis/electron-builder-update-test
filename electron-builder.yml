@@ -1,0 +1,12 @@
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+        - ia32
+linux:
+  target:
+    - target: appimage
+      arch:
+        - x64
+publish: github
