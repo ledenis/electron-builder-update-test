@@ -1,6 +1,8 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, Menu} = require('electron')
 const {autoUpdater} = require('electron-updater')
+const openAboutWindow = require('about-window').default
+const {join} = require('path')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -25,6 +27,24 @@ function createWindow () {
   })
 
   autoUpdater.checkForUpdatesAndNotify()
+
+  const menu = Menu.buildFromTemplate([
+    {
+      label: 'Help',
+      submenu: [
+        {
+          label: 'About This App',
+          click: () =>
+            openAboutWindow({
+              icon_path: './icon.png',
+              icon_path: join(__dirname, 'icon.png'),
+              open_devtools: process.env.NODE_ENV !== 'production',
+            }),
+        },
+      ],
+    },
+  ])
+  mainWindow.setMenu(menu)
 }
 
 // This method will be called when Electron has finished
